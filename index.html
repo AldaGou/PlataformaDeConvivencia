@@ -14,6 +14,7 @@
             --color-texto: #333;
             --color-fondo: #f4f6f8;
             --color-blanco: #ffffff;
+            --color-error: #E53935;
             --sombra-tarjeta: 0 4px 12px rgba(0, 0, 0, 0.05);
             --borde-radio: 8px;
         }
@@ -25,6 +26,61 @@
             margin: 0;
             line-height: 1.6;
         }
+        
+        /* --- Pantalla de Login --- */
+        #login-container {
+            display: flex; /* Visible por defecto */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #login-form {
+            background-color: var(--color-blanco);
+            padding: 2.5rem;
+            border-radius: var(--borde-radio);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        #login-form h2 {
+            text-align: center;
+            color: var(--color-primario-oscuro);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        #login-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        #login-form input[type="text"],
+        #login-form input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            box-sizing: border-box; /* Clave para que padding no rompa el width */
+        }
+        
+        #login-error {
+            color: var(--color-error);
+            text-align: center;
+            font-size: 0.9rem;
+            min-height: 1.2em; /* Evita que el layout salte */
+            margin-bottom: 1rem;
+        }
+
+        /* --- Contenedor de la App Principal (Oculto) --- */
+        #app-container {
+            display: none; /* Oculto por defecto */
+        }
+
 
         /* --- Encabezado --- */
         header {
@@ -111,6 +167,8 @@
             text-transform: uppercase;
             font-size: 0.85rem;
             transition: background-color 0.3s;
+            width: 100%; /* Botón de login al 100% */
+            box-sizing: border-box;
         }
 
         .button-primary:hover {
@@ -212,7 +270,7 @@
             right: 2rem;
             width: 60px;
             height: 60px;
-            background-color: #E53935; /* Rojo para "ayuda" */
+            background-color: var(--color-error);
             color: var(--color-blanco);
             border: none;
             border-radius: 50%;
@@ -296,91 +354,135 @@
 </head>
 <body>
 
-    <header>
-        <h1>Plataforma de Convivencia (Grupo 06)</h1>
-        <div class="user-profile">
-            <span>Bienvenido, Álex</span>
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Avatar de Álex">
-        </div>
-    </header>
+    <div id="login-container">
+        <form id="login-form">
+            <h2>Iniciar Sesión (Prototipo)</h2>
+            <p id="login-error"></p>
+            <div>
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <button type="submit" class="button-primary">Ingresar</button>
+        </form>
+    </div>
 
-    <main class="dashboard">
+    <div id="app-container">
+        <header>
+            <h1>Plataforma de Convivencia (Grupo 06)</h1>
+            <div class="user-profile">
+                <span>Bienvenido, Álex</span>
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Avatar de Álex">
+            </div>
+        </header>
 
-        <section class="card" id="team-status">
-            <h2><span class="emoji">🌡️</span> Clima del Equipo</h2>
-            <p>Registra cómo te sientes para que el equipo pueda entender el clima general. Ayuda a gestionar el estrés y la frustración.</p>
-            <div id="team-status-chart">
+        <main class="dashboard">
+
+            <section class="card" id="team-status">
+                <h2><span class="emoji">🌡️</span> Clima del Equipo</h2>
+                <p>Registra cómo te sientes para que el equipo pueda entender el clima general. Ayuda a gestionar el estrés y la frustración.</p>
+                <div id="team-status-chart">
+                    </div>
+                <button id="emotion-btn" class="button-primary" style="width: auto;">Registrar mi estado</button>
+            </section>
+
+            <section class="card" id="weekly-challenge">
+                <h2><span class="emoji">🎯</span> Reto de la Semana</h2>
+                <h3>Dinámica: Crítica Constructiva</h3>
+                <p>Esta semana, el reto es aprender a dar retroalimentación sin que se interprete como un "ataque personal".</p>
+                <a href="#" class="button-secondary">Ver Reto</a>
+            </section>
+
+            <section class="card" id="task-board">
+                <h2><span class="emoji">📋</span> Tablero de Tareas</h2>
+                <p>Organiza las tareas para evitar la "irresponsabilidad de algunos" y la "desigualdad" en la carga de trabajo.</p>
+                <ul class="task-list">
+                    <li><span>Definir paleta de colores</span> <span class="user-tag">Álex</span></li>
+                    <li><span>Hacer planos de planta</span> <span class="user-tag">Sofía</span></li>
+                    <li><span>Preparar presentación</span> <span class="user-tag">Mateo</span></li>
+                    <li><span>Investigar materiales</span> <span class="user-tag">Laura</span></li>
+                </ul>
+                <a href="#" class="button-secondary">Ir al tablero completo</a>
+            </section>
+
+            <section class="card" id="guides">
+                <h2><span class="emoji">💡</span> Guías Rápidas</h2>
+                <p>Protocolos de resolución temprana para cuando no saben "por dónde comenzar".</p>
+                <ul class="guide-list">
+                    <li><a href="#">Cómo dividir tareas equitativamente</a></li>
+                    <li><a href="#">Qué hacer si un compañero no responde</a></li>
+                    <li><a href="#">Protocolo de 3 pasos para un desacuerdo</a></li>
+                </ul>
+            </section>
+
+        </main>
+
+        <button id="help-btn" class="help-button" aria-label="Pedir Ayuda">?</button>
+
+        <div id="emotional-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>¿Cómo te sientes hoy?</h2>
+                <p>Tu selección es anónima y ayuda a crear el "termómetro" del equipo.</p>
+                <div class="modal-options">
+                    <button class="emotion-option" data-emotion="motivado">💪 Motivado</button>
+                    <button class="emotion-option" data-emotion="concentrado">🤔 Concentrado</button>
+                    <button class="emotion-option" data-emotion="confundido">❓ Confundido</button>
+                    <button class="emotion-option" data-emotion="estresado">😥 Estresado</button>
+                    <button class="emotion-option" data-emotion="frustrado">😡 Frustrado</button>
                 </div>
-            <button id="emotion-btn" class="button-primary">Registrar mi estado</button>
-        </section>
-
-        <section class="card" id="weekly-challenge">
-            <h2><span class="emoji">🎯</span> Reto de la Semana</h2>
-            <h3>Dinámica: Crítica Constructiva</h3>
-            <p>Esta semana, el reto es aprender a dar retroalimentación sin que se interprete como un "ataque personal".</p>
-            <a href="#" class="button-secondary">Ver Reto</a>
-        </section>
-
-        <section class="card" id="task-board">
-            <h2><span class="emoji">📋</span> Tablero de Tareas</h2>
-            <p>Organiza las tareas para evitar la "irresponsabilidad de algunos" y la "desigualdad" en la carga de trabajo.</p>
-            <ul class="task-list">
-                <li><span>Definir paleta de colores</span> <span class="user-tag">Álex</span></li>
-                <li><span>Hacer planos de planta</span> <span class="user-tag">Sofía</span></li>
-                <li><span>Preparar presentación</span> <span class="user-tag">Mateo</span></li>
-                <li><span>Investigar materiales</span> <span class="user-tag">Laura</span></li>
-            </ul>
-            <a href="#" class="button-secondary">Ir al tablero completo</a>
-        </section>
-
-        <section class="card" id="guides">
-            <h2><span class="emoji">💡</span> Guías Rápidas</h2>
-            <p>Protocolos de resolución temprana para cuando no saben "por dónde comenzar".</p>
-            <ul class="guide-list">
-                <li><a href="#">Cómo dividir tareas equitativamente</a></li>
-                <li><a href="#">Qué hacer si un compañero no responde</a></li>
-                <li><a href="#">Protocolo de 3 pasos para un desacuerdo</a></li>
-            </ul>
-        </section>
-
-    </main>
-
-    <button id="help-btn" class="help-button" aria-label="Pedir Ayuda">?</button>
-
-    <div id="emotional-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>¿Cómo te sientes hoy?</h2>
-            <p>Tu selección es anónima y ayuda a crear el "termómetro" del equipo.</p>
-            <div class="modal-options">
-                <button class="emotion-option" data-emotion="motivado">💪 Motivado</button>
-                <button class="emotion-option" data-emotion="concentrado">🤔 Concentrado</button>
-                <button class="emotion-option" data-emotion="confundido">❓ Confundido</button>
-                <button class="emotion-option" data-emotion="estresado">😥 Estresado</button>
-                <button class="emotion-option" data-emotion="frustrado">😡 Frustrado</button>
             </div>
         </div>
-    </div>
 
-    <div id="help-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Asistencia de Mediación</h2>
-            <p>¿Tu equipo está atascado? No dejen que el conflicto escale.</p>
-            <div class="modal-options vertical">
-                <button>🤖 **Ayuda IA:** Recibir consejos de comunicación asertiva.</button>
-                <button>🧑‍🎓 **Mediador de Pares:** Solicitar que un alumno de 3er ciclo medie en la reunión.</button>
-                <button>👨‍🏫 **Contactar Docente:** Enviar un resumen del problema al profesor (último recurso).</button>
+        <div id="help-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Asistencia de Mediación</h2>
+                <p>¿Tu equipo está atascado? No dejen que el conflicto escale.</p>
+                <div class="modal-options vertical">
+                    <button>🤖 **Ayuda IA:** Recibir consejos de comunicación asertiva.</button>
+                    <button>🧑‍🎓 **Mediador de Pares:** Solicitar que un alumno de 3er ciclo medie en la reunión.</button>
+                    <button>👨‍🏫 **Contactar Docente:** Enviar un resumen del problema al profesor (último recurso).</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <script>
+    </div> <script>
         // Espera a que todo el contenido HTML esté cargado
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- LÓGICA DE LOGIN ---
+            const loginContainer = document.getElementById('login-container');
+            const appContainer = document.getElementById('app-container');
+            const loginForm = document.getElementById('login-form');
+            const loginError = document.getElementById('login-error');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // Evita que la página se recargue
+
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+
+                // Valida las credenciales
+                if (username === 'prototipo' && password === 'prototipo') {
+                    // Éxito: Oculta login, muestra app
+                    loginContainer.style.display = 'none';
+                    appContainer.style.display = 'block';
+                    loginError.textContent = '';
+                } else {
+                    // Falla: Muestra error
+                    loginError.textContent = 'Usuario o contraseña incorrectos. Intenta con "prototipo".';
+                }
+            });
+
+
+            // --- LÓGICA DE LA APLICACIÓN (Dashboard) ---
+
             // --- DATOS SIMULADOS DEL EQUIPO ---
-            // Datos iniciales para el termómetro emocional
             const teamEmotions = {
                 motivado: 3,
                 concentrado: 2,
@@ -454,22 +556,16 @@
                 button.addEventListener('click', () => {
                     const selectedEmotion = button.dataset.emotion;
                     
-                    // Incrementa el contador de la emoción seleccionada
                     teamEmotions[selectedEmotion]++;
-                    
-                    // Actualiza el gráfico
                     updateEmotionChart();
-                    
-                    // Oculta el modal
                     hideModal(emotionModal);
                     
-                    // Deshabilita el botón principal para evitar spam
                     emotionBtn.textContent = '¡Gracias por registrar!';
                     emotionBtn.disabled = true;
                     setTimeout(() => {
                         emotionBtn.textContent = 'Registrar mi estado';
                         emotionBtn.disabled = false;
-                    }, 5000); // Reactiva después de 5 segundos
+                    }, 5000); 
                 });
             });
 
