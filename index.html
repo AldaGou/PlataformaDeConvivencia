@@ -468,14 +468,14 @@
                 const password = passwordInput.value;
 
                 // Valida las credenciales
-                if (username === 'prototipo' && password === 'prototipo') {
+                if (username === '123' && password === '123') {
                     // Éxito: Oculta login, muestra app
                     loginContainer.style.display = 'none';
                     appContainer.style.display = 'block';
                     loginError.textContent = '';
                 } else {
                     // Falla: Muestra error
-                    loginError.textContent = 'Usuario o contraseña incorrectos. Intenta con "prototipo".';
+                    loginError.textContent = 'Usuario o contraseña incorrectos. Intenta con "123".';
                 }
             });
 
@@ -577,5 +577,6 @@
     </script>
 </body>
 </html>
+
 
 
